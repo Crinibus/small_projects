@@ -9,10 +9,6 @@ class Kortspil:
     antal_mulige_kort: dict
     antal_taget_kort: dict
 
-@dataclass
-class Kort:
-    nummer: int
-    ejer: str
     
 
 kortspil = Kortspil(52, 
@@ -138,21 +134,21 @@ def duel(list_spillere):
 def krig(kort_0, kort_1, list_spillere):
     if list_spillere[0].antal_kort >= 3 and list_spillere[1].antal_kort >= 3:
         antal_kort_krig = 3
-    else:
-        antal_kort_krig = int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort]))
-    # elif list_spillere[0].antal_kort >= 1 and list_spillere[1].antal_kort >= 1:
-    #     antal_kort_krig = int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort]))
     # else:
-    #     return
+    #     antal_kort_krig = int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort]))
+    elif list_spillere[0].antal_kort >= 1 and list_spillere[1].antal_kort >= 1:
+        antal_kort_krig = int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort]))
+    else:
+        return
 
     kort_0_3 = [vælg_tilfældigt_kort(list_spillere[0]) for _ in range(antal_kort_krig)]
     kort_1_3 = [vælg_tilfældigt_kort(list_spillere[1]) for _ in range(antal_kort_krig)]
     
     for kort in kort_0_3:
-        list_spillere[0].taget_kort[kort] -= 1
+        #list_spillere[0].taget_kort[kort] -= 1
         list_spillere[0].antal_kort -= 1
     for kort in kort_1_3:
-        list_spillere[1].taget_kort[kort] -= 1
+        #list_spillere[1].taget_kort[kort] -= 1
         list_spillere[1].antal_kort -= 1
 
     point_0 = 0
