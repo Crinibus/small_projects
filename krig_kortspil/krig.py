@@ -1,6 +1,6 @@
 import random
 from dataclasses import dataclass
-
+import sys
 
 @dataclass
 class Kortspil:
@@ -223,10 +223,12 @@ def vælg_tilfældigt_kort(spiller):
 # print()
 
 if __name__ == '__main__':
-    antal_spillere = int(input('Hvor mange vil spille?\n> '))
     list_spillere = []
-    for _ in range(antal_spillere):
-        spiller_navn = input('Indtast navn: ')
+    #antal_spillere = int(input('Hvor mange vil spille?\n> '))
+    list_spillere_navn = [spiller for spiller in sys.argv if spiller != sys.argv[0]]
+    antal_spillere = len(list_spillere_navn)
+    for spiller_navn in list_spillere_navn:
+    #     spiller_navn = input('Indtast navn: ')
         list_spillere.append(Spiller(spiller_navn, kortspil.antal_kort/antal_spillere))
     while list_spillere[0].antal_kort > 0 and list_spillere[1].antal_kort > 0:
         duel(list_spillere)
