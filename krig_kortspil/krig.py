@@ -242,9 +242,11 @@ if __name__ == '__main__':
     for spiller_navn in list_spillere_navn:
     #     spiller_navn = input('Indtast navn: ')
         list_spillere.append(Spiller(spiller_navn, kortspil.antal_kort/antal_spillere))
+    antal_runder = 0
     while list_spillere[0].antal_kort > 0 and list_spillere[1].antal_kort > 0:
         duel(list_spillere)
+        antal_runder += 1
     print(f'antal kort for {list_spillere[0].navn}: {list_spillere[0].antal_kort}')
     print(f'antal kort for {list_spillere[1].navn}: {list_spillere[1].antal_kort}')
-    print(f'{check_for_winner(list_spillere).navn} vandt efter ?? runder')
+    print(f'{check_for_winner(list_spillere).navn} vandt efter {antal_runder} runder')
 
