@@ -257,7 +257,7 @@ if __name__ == '__main__':
     print(f'{check_for_winner(list_spillere).navn} vandt efter {antal_runder} runder')
 
 
-print('Nikolaj:')
+print('\nNikolaj:')
 for kort in sorted(list_spillere[0].taget_kort):
     print(f'{kort}: {list_spillere[0].taget_kort[kort]}, ', end='')
 print('\nMikael:')
