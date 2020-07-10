@@ -160,12 +160,14 @@ def krig(kort_0, kort_1, list_spillere):
 
     list_spillere[0].point = 0
     list_spillere[1].point = 0
+
     if int(kort_0_3[0]) > int(kort_1_3[0]):
         list_spillere[0].point += 1
     elif int(kort_0_3[0]) < int(kort_1_3[0]):
         list_spillere[1].point += 1
     else:
-        print('ny krig 1')
+        tilfældig_spiller = random.choice(list_spillere)
+        tilfældig_spiller.point += 1
 
     if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 2:
         if int(kort_0_3[1]) > int(kort_1_3[1]):
@@ -173,7 +175,8 @@ def krig(kort_0, kort_1, list_spillere):
         elif int(kort_0_3[1]) < int(kort_1_3[1]):
             list_spillere[1].point += 1
         else:
-            print('ny krig 2')
+            tilfældig_spiller = random.choice(list_spillere)
+            tilfældig_spiller.point += 1
 
         if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 3:
             if int(kort_0_3[2]) > int(kort_1_3[2]):
@@ -181,7 +184,8 @@ def krig(kort_0, kort_1, list_spillere):
             elif int(kort_0_3[2]) < int(kort_1_3[2]):
                 list_spillere[1].point += 1
             else:
-                print('ny krig 3')
+                tilfældig_spiller = random.choice(list_spillere)
+                tilfældig_spiller.point += 1
 
     if list_spillere[0].point > list_spillere[1].point:
         print(f'{list_spillere[0].navn} har vundet krig')
