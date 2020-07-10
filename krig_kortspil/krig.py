@@ -128,8 +128,9 @@ def duel(list_spillere):
     else:
         print('oh shit, krig!')
         krig(kort_0, kort_1, list_spillere)
+        print(f'{list_spillere[0].navn} har nu {list_spillere[0].antal_kort} kort')
+        print(f'{list_spillere[1].navn} har nu {list_spillere[1].antal_kort} kort')
 
-    
 
 def krig(kort_0, kort_1, list_spillere):
     if list_spillere[0].antal_kort >= 3 and list_spillere[1].antal_kort >= 3:
@@ -143,7 +144,7 @@ def krig(kort_0, kort_1, list_spillere):
 
     kort_0_3 = [vælg_tilfældigt_kort(list_spillere[0]) for _ in range(antal_kort_krig)]
     kort_1_3 = [vælg_tilfældigt_kort(list_spillere[1]) for _ in range(antal_kort_krig)]
-    
+
     for kort in kort_0_3:
         #list_spillere[0].taget_kort[kort] -= 1
         list_spillere[0].antal_kort -= 1
@@ -157,7 +158,7 @@ def krig(kort_0, kort_1, list_spillere):
         point_0 += 1
     elif int(kort_0_3[0]) < int(kort_1_3[0]):
         point_1 += 1
-    
+
     if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 2:
         if int(kort_0_3[1]) > int(kort_1_3[1]):
             point_0 += 1
@@ -176,7 +177,7 @@ def krig(kort_0, kort_1, list_spillere):
             list_spillere[0].taget_kort[kort] += 1
         for kort in kort_1_3:
             list_spillere[0].taget_kort[kort] += 1
-        list_spillere[0].antal_kort += 8
+        list_spillere[0].antal_kort += antal_kort_krig*2+2
         #return list_spillere[0]
     elif point_0 < point_1:
         print(f'{list_spillere[1].navn} har vundet krig')
@@ -184,7 +185,7 @@ def krig(kort_0, kort_1, list_spillere):
             list_spillere[1].taget_kort[kort] += 1
         for kort in kort_1_3:
             list_spillere[1].taget_kort[kort] += 1
-        list_spillere[1].antal_kort += 8
+        list_spillere[1].antal_kort += antal_kort_krig*2+2
         #return list_spillere[1]
     else:
         tilfældig_spiller = random.choice(list(list_spillere))
@@ -193,7 +194,7 @@ def krig(kort_0, kort_1, list_spillere):
             tilfældig_spiller.taget_kort[kort] += 1
         for kort in kort_1_3:
             tilfældig_spiller.taget_kort[kort] += 1
-        tilfældig_spiller.antal_kort += 8
+        tilfældig_spiller.antal_kort += antal_kort_krig*2+2
         #return random.choice(list(list_spillere))
 
 
