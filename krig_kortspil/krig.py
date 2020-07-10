@@ -215,6 +215,12 @@ def vælg_tilfældigt_kort(spiller):
     spiller.taget_kort[kort] -= 1
     return kort
 
+def check_for_winner(list_spillere):
+    if list_spillere[0].antal_kort > list_spillere[1].antal_kort:
+        return list_spillere[0]
+    else:
+        return list_spillere[1]
+
 #Nikolaj = Spiller('Nikolaj', kortspil.antal_kort/2)
 #Mikael = Spiller('Mikael', kortspil.antal_kort/2)
 
@@ -240,4 +246,5 @@ if __name__ == '__main__':
         duel(list_spillere)
     print(f'antal kort for {list_spillere[0].navn}: {list_spillere[0].antal_kort}')
     print(f'antal kort for {list_spillere[1].navn}: {list_spillere[1].antal_kort}')
+    print(f'{check_for_winner(list_spillere).navn} vandt efter ?? runder')
 
