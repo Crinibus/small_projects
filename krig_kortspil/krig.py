@@ -193,7 +193,7 @@ def krig(kort_0, kort_1, list_spillere):
         list_spillere[1].antal_kort += antal_kort_krig*2+2
         #return list_spillere[1]
     else:
-        tilfældig_spiller = random.choice(list(list_spillere))
+        tilfældig_spiller = random.choice(list_spillere)
         print(f'{tilfældig_spiller.navn} har vundet krig (tilfældigt)')
         for kort in kort_0_3:
             tilfældig_spiller.taget_kort[kort] += 1
