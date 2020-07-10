@@ -57,6 +57,7 @@ class Spiller:
     def __init__(self, navn, antal_kort):
         self.navn = navn
         self.antal_kort = int(antal_kort)
+        self.point = 0
         self.taget_kort = {"1": 0,
                            "2": 0, 
                            "3": 0,
@@ -157,32 +158,32 @@ def krig(kort_0, kort_1, list_spillere):
         #list_spillere[1].taget_kort[kort] -= 1
         list_spillere[1].antal_kort -= 1
 
-    point_0 = 0
-    point_1 = 0
+    list_spillere[0].point = 0
+    list_spillere[1].point = 0
     if int(kort_0_3[0]) > int(kort_1_3[0]):
-        point_0 += 1
+        list_spillere[0].point += 1
     elif int(kort_0_3[0]) < int(kort_1_3[0]):
-        point_1 += 1
+        list_spillere[1].point += 1
     else:
         print('ny krig 1')
 
     if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 2:
         if int(kort_0_3[1]) > int(kort_1_3[1]):
-            point_0 += 1
+            list_spillere[0].point += 1
         elif int(kort_0_3[1]) < int(kort_1_3[1]):
-            point_1 += 1
+            list_spillere[1].point += 1
         else:
             print('ny krig 2')
 
         if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 3:
             if int(kort_0_3[2]) > int(kort_1_3[2]):
-                point_0 += 1
+                list_spillere[0].point += 1
             elif int(kort_0_3[2]) < int(kort_1_3[2]):
-                point_1 += 1
+                list_spillere[1].point += 1
             else:
                 print('ny krig 3')
 
-    if point_0 > point_1:
+    if list_spillere[0].point > list_spillere[1].point:
         print(f'{list_spillere[0].navn} har vundet krig')
         for kort in kort_0_3:
             list_spillere[0].taget_kort[kort] += 1
@@ -190,7 +191,7 @@ def krig(kort_0, kort_1, list_spillere):
             list_spillere[0].taget_kort[kort] += 1
         list_spillere[0].antal_kort += antal_kort_krig*2+2
         #return list_spillere[0]
-    elif point_0 < point_1:
+    elif list_spillere[0].point < list_spillere[1].point:
         print(f'{list_spillere[1].navn} har vundet krig')
         for kort in kort_0_3:
             list_spillere[1].taget_kort[kort] += 1
