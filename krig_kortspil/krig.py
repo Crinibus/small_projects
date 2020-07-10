@@ -140,6 +140,11 @@ def krig(kort_0, kort_1, list_spillere):
     elif list_spillere[0].antal_kort >= 1 and list_spillere[1].antal_kort >= 1:
         antal_kort_krig = int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort]))
     else:
+        tilfældig_spiller = random.choice(list_spillere)
+        tilfældig_spiller.taget_kort[kort_0] += 1
+        tilfældig_spiller.taget_kort[kort_1] += 1
+        tilfældig_spiller.antal_kort += 2
+        print(f'{tilfældig_spiller.navn} har tabt et kort (tilfældigt pga. 0 kort ved den ene)')
         return
 
     kort_0_3 = [vælg_tilfældigt_kort(list_spillere[0]) for _ in range(antal_kort_krig)]
