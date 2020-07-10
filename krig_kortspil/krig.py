@@ -163,18 +163,24 @@ def krig(kort_0, kort_1, list_spillere):
         point_0 += 1
     elif int(kort_0_3[0]) < int(kort_1_3[0]):
         point_1 += 1
+    else:
+        print('ny krig 1')
 
     if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 2:
         if int(kort_0_3[1]) > int(kort_1_3[1]):
             point_0 += 1
         elif int(kort_0_3[1]) < int(kort_1_3[1]):
             point_1 += 1
+        else:
+            print('ny krig 2')
 
         if int(min([list_spillere[0].antal_kort, list_spillere[1].antal_kort])) >= 3:
             if int(kort_0_3[2]) > int(kort_1_3[2]):
                 point_0 += 1
             elif int(kort_0_3[2]) < int(kort_1_3[2]):
                 point_1 += 1
+            else:
+                print('ny krig 3')
 
     if point_0 > point_1:
         print(f'{list_spillere[0].navn} har vundet krig')
@@ -207,12 +213,13 @@ def vælg_tilfældigt_kort(spiller):
     checked = []
     kort = random.choice(list(list_spillere[0].taget_kort.keys()))
     while spiller.taget_kort[kort] == 0:
-        kort = random.choice(list(list_spillere[0].taget_kort.keys()))
         if kort not in checked:
             checked.append(kort)
+        kort = random.choice(list(list_spillere[0].taget_kort.keys()))
         if len(checked) == 13:
             break
-    spiller.taget_kort[kort] -= 1
+    if spiller.taget_kort[kort] > 0:
+        spiller.taget_kort[kort] -= 1
     return kort
 
 def check_for_winner(list_spillere):
@@ -227,13 +234,6 @@ def check_for_winner(list_spillere):
 
 #uddel_kort([Nikolaj, Mikael])
 
-# print('Nikolaj:')
-# for kort in sorted(Nikolaj.taget_kort):
-#     print(f'{kort}: {Nikolaj.taget_kort[kort]}, ', end='')
-# print('\nMikael:')
-# for kort in sorted(Mikael.taget_kort):
-#     print(f'{kort}: {Mikael.taget_kort[kort]}, ', end='')
-# print()
 
 if __name__ == '__main__':
     list_spillere = []
@@ -251,3 +251,11 @@ if __name__ == '__main__':
     print(f'antal kort for {list_spillere[1].navn}: {list_spillere[1].antal_kort}')
     print(f'{check_for_winner(list_spillere).navn} vandt efter {antal_runder} runder')
 
+
+print('Nikolaj:')
+for kort in sorted(list_spillere[0].taget_kort):
+    print(f'{kort}: {list_spillere[0].taget_kort[kort]}, ', end='')
+print('\nMikael:')
+for kort in sorted(list_spillere[1].taget_kort):
+    print(f'{kort}: {list_spillere[1].taget_kort[kort]}, ', end='')
+print()
