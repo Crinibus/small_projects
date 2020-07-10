@@ -216,6 +216,7 @@ def vælg_tilfældigt_kort(spiller):
     return kort
 
 def check_for_winner(list_spillere):
+    '''Returns the player with most cards; the winner'''
     if list_spillere[0].antal_kort > list_spillere[1].antal_kort:
         return list_spillere[0]
     else:
