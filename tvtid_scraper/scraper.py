@@ -38,8 +38,9 @@ def get_soup(URL='https://tvtid.tv2.dk/'):
     return BeautifulSoup(response.text, 'html.parser')
 
 
-def get_channels(soup) -> list:
+def get_channels() -> list:
     """Find all channels with programs, and return the list"""
+    soup = get_soup()
     channels = soup.find_all('article', class_='tv2epg-channel')
     return channels
 
@@ -165,8 +166,7 @@ def main(args):
         print('You haven\'t chosen one or more channels')
         return
 
-    soup = get_soup()
-    channel_list = get_channels(soup)
+    channel_list = get_channels()
     program_dict = get_programs(channel_list, args.channel)
     if args.time:
         print_time_program(program_dict, args.time)
