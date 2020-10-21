@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["-c=DR1", "-c=TV2", "-t=20:00", "-a"]
+            "args": ["-c=tv2", "-t=20:00"]
         }
     ]
 }
