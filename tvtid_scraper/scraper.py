@@ -48,7 +48,8 @@ def get_programs(channel_list: list, channels: list) -> dict:
     """Find the programs for the specified channels and return a dict with them where the channels are the keys"""
     channel_index = {
         'dr1': 0,
-        'tv2': 1
+        'tv2': 1,
+        'tv3': 2
     }
     
     program_dict = {}

@@ -38,6 +38,7 @@ By using the flag "-a" or "--all" you want to see all the programs running today
 Right now only the following channels is supported:
 - dr1
 - tv2
+- tv3
 
 
 ## TODO
