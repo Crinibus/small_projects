@@ -49,7 +49,37 @@ def get_programs(channel_list: list, channels: list) -> dict:
     channel_index = {
         'dr1': 0,
         'tv2': 1,
-        'tv3': 2
+        'tv3': 2,
+        'dr2': 3,
+        'tv2-charlie': 4,
+        'tv2-news': 5,
+        'kanal-5': 6,
+        'tv3-plus': 7,
+        'tv2-zulu': 8,
+        'dr-ramasjang': 9,
+        'kanal-4': 10,
+        'tv2-sport': 11,
+        'tv2-sport-x': 12,
+        'tv3-sport': 13,
+        'tv3-puls': 14,
+        '6eren': 15,
+        'disney-channel': 16,
+        'tv2-fri': 17,
+        'canal-9': 18,
+        'discovery-channel': 19,
+        'tlc': 20,
+        'nickelodeon': 21,
+        'national-geographic-channel': 22,
+        'tv3-max': 23,
+        'cartoon': 24,
+        'disney-junior': 25,
+        'dk4': 26,
+        'mtv': 27,
+        'animal-planet': 28,
+        'investigation-discovery': 29,
+        'vh1': 30,
+        'eurosport-2': 31,
+        'boomerang': 32,
     }
     
     program_dict = {}
@@ -72,7 +102,7 @@ def get_programs(channel_list: list, channels: list) -> dict:
 def print_all_programs(program_dict: list):
     """Print all the programs in the provided dict"""
     for channel in program_dict.keys():
-        print(f'\n{channel.upper()}')
+        print(f'\n{channel.upper().replace("-", " ")}')
         for program in program_dict[channel]:
             for prog in program:
                 print(f"{prog.time.text} > {prog.strong.text}")
@@ -96,7 +126,7 @@ def print_time_program(program_dict: dict, time: str):
 
 
     for channel in progsTime.keys():
-        print(f'{channel.upper()}')
+        print(f'{channel.upper().replace("-", " ")}')
         if len(progsTime[channel]) != 0:
             print(f'{time} > {progsTime[channel][0].strong.text}\n')
         else:

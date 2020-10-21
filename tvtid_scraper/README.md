@@ -25,6 +25,7 @@ For example:
 ```
 python3 scraper.py -c [channel_1] -c [channel_2]
 ```
+**OBS**: when specifing channels with a space such as "TV2 News", use a dash (-) instead of a space.
 
 <br/>
 
@@ -35,12 +36,44 @@ By using the flag "-a" or "--all" you want to see all the programs running today
 
 <br/>
 
-Right now only the following channels is supported:
+Right now all the channels on "tvtid.tv2.dk" is supported with is:
 - dr1
 - tv2
 - tv3
+- dr2
+- tv2-charlie
+- tv2-news
+- kanal-5
+- tv3-plus
+- tv2-zulu
+- dr-ramasjang
+- kanal-4
+- tv2-sport
+- tv2-sport-x
+- tv3-sport
+- tv3-puls
+- 6eren
+- disney-channel
+- tv2-fri
+- canal-9
+- discovery-channel
+- tlc
+- nickelodeon
+- national-geographic-channel
+- tv3-max
+- cartoon
+- disney-junior
+- dk4
+- mtv
+- animal-planet
+- investigation-discovery
+- vh1
+- eurosport-2
+- boomerang
 
+<br/>
 
 ## TODO
 
 - Add support for multiple "--time" flags
+- Add support for "all" with the flag "--channel" for choosing all channels
