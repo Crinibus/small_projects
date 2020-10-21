@@ -24,7 +24,7 @@ def argparse_setup():
     parser.add_argument(
         '-a',
         '--all',
-        help='show all programs for the chosen channel',
+        help='show all programs for the chosen channel(s)',
         action='store_true'
     )
     
