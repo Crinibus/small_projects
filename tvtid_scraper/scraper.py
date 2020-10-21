@@ -149,12 +149,12 @@ def print_time_program(program_dict: dict, timeStart: str):
 
 
     for channel in program_dict.keys():
-        for index, program in enumerate(program_dict[channel]):
-            for index2, prog in enumerate(program):
+        for program in program_dict[channel]:
+            for index, prog in enumerate(program):
                 # Append only the programs that start at the specified time to progsTime
                 if prog.time.text == timeStart:
                     progsTime[channel].append(prog)
-                    progsAfter[channel].append(program[index2+1])
+                    progsAfter[channel].append(program[index+1])
 
 
     for channel in progsTime.keys():
