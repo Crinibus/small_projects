@@ -12,7 +12,7 @@ This prints only the tv-shows that start at 8 pm on the channels DR1 and TV2.
 
 <br/>
 
-# Avalible flags
+# Available flags
 - ```-c [channel]``` or ```--channel [channel]```
 - ```-t [hh:mm]``` or ```--time [hh:mm]```
 - ```-a``` or ```--all```
