@@ -129,8 +129,10 @@ def print_all_programs(program_dict: list):
 
 def print_time_program(program_dict: dict, time: str):
     """Find and print the program at the specified time on the channels defined in program_dict"""
+    # Contains the program(s) that start at the specified time
     progsTime = {}
-
+    
+    # Contains the program after the program(s) that is stored in progsTime, to later get when the program(s) ends
     progsAfter = {}
 
     # Check if channel is in progsTime dict, if not add channel as key
@@ -147,7 +149,7 @@ def print_time_program(program_dict: dict, time: str):
     for channel in program_dict.keys():
         for index, program in enumerate(program_dict[channel]):
             for index2, prog in enumerate(program):
-                # Append only the programs that start at the specified time
+                # Append only the programs that start at the specified time to progsTime
                 if prog.time.text == time:
                     progsTime[channel].append(prog)
                     progsAfter[channel].append(program[index2+1])
