@@ -17,7 +17,7 @@ def argparse_setup():
     parser.add_argument(
         '-t',
         '--time',
-        help='the time the program starts. E.g. "20:00"',
+        help='the time the program starts. E.g. "20:00". Format is: "hh:mm"',
         type=str
     )
     
@@ -124,14 +124,16 @@ def print_all_programs(program_dict: list):
         print(f'\n{channel.upper().replace("-", " ")}')
         for program in program_dict[channel]:
             for prog in program:
-                print(f"{prog.time.text} > {prog.strong.text}")
+                timeStart = prog.time.text
+                progsTitle = prog.strong.text
+                print(f"{timeStart} > {progsTitle}")
 
 
-def print_time_program(program_dict: dict, time: str):
+def print_time_program(program_dict: dict, timeStart: str):
     """Find and print the program at the specified time on the channels defined in program_dict"""
     # Contains the program(s) that start at the specified time
     progsTime = {}
-    
+
     # Contains the program after the program(s) that is stored in progsTime, to later get when the program(s) ends
     progsAfter = {}
 
@@ -150,17 +152,19 @@ def print_time_program(program_dict: dict, time: str):
         for index, program in enumerate(program_dict[channel]):
             for index2, prog in enumerate(program):
                 # Append only the programs that start at the specified time to progsTime
-                if prog.time.text == time:
+                if prog.time.text == timeStart:
                     progsTime[channel].append(prog)
                     progsAfter[channel].append(program[index2+1])
 
 
     for channel in progsTime.keys():
+        timeEnd = progsAfter[channel][0].time.text
+        progsTitle = progsTime[channel][0].strong.text
         print(f'{channel.upper().replace("-", " ")}')
         if len(progsTime[channel]) != 0:
-            print(f'{time} - {progsAfter[channel][0].time.text} > {progsTime[channel][0].strong.text}\n')
+            print(f'{timeStart} - {timeEnd} > {progsTitle}\n')
         else:
-            print(f'There is no programs that start at this time: {time}\n')
+            print(f'There is no programs that start at this time: {timeStart}\n')
 
 
 def main(args):
