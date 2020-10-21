@@ -84,17 +84,35 @@ def get_programs(channel_list: list, channels: list) -> dict:
     
     program_dict = {}
 
-    for channel in channels:
-        channel = channel.lower()
 
-        # Check if channel is in channel_indix dict, if not add channel as key
-        if channel not in program_dict.keys():
-            program_dict.update({channel: []})
+    allChannelsChosen = False
 
-        # Get index from dict
-        index = channel_index[channel]
-        # Add all program in channel to program_dict
-        program_dict[channel].append(channel_list[index].find_all('a', class_='tv2epg-program-link'))
+    if channels[0] == 'all':
+        allChannelsChosen = True
+
+
+    if not allChannelsChosen:
+        for channel in channels:
+            channel = channel.lower()
+
+            # Check if channel is in channel_indix dict, if not add channel as key
+            if channel not in program_dict.keys():
+                program_dict.update({channel: []})
+
+            # Get index from dict
+            index = channel_index[channel]
+            # Add all program in channel to program_dict
+            program_dict[channel].append(channel_list[index].find_all('a', class_='tv2epg-program-link'))
+    else:
+        for channel in channel_index.keys():
+            # Check if channel is in channel_indix dict, if not add channel as key
+            if channel not in program_dict.keys():
+                program_dict.update({channel: []})
+
+            # Get index from dict
+            index = channel_index[channel]
+            # Add all program in channel to program_dict
+            program_dict[channel].append(channel_list[index].find_all('a', class_='tv2epg-program-link'))
     
     return program_dict
 

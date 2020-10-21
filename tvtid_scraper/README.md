@@ -76,4 +76,3 @@ Right now all the channels on "tvtid.tv2.dk" is supported with is:
 ## TODO
 
 - Add support for multiple "--time" flags
-- Add support for "all" with the flag "--channel" for choosing all channels
