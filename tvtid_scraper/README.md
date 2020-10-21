@@ -76,3 +76,4 @@ Right now all the channels on "tvtid.tv2.dk" is supported with is:
 ## TODO
 
 - Add support for multiple "--time" flags
+- Able to chose which day the user want to see tv-shows from
