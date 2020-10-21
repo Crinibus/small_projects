@@ -130,23 +130,32 @@ def print_time_program(program_dict: dict, time: str):
     """Find and print the program at the specified time on the channels defined in program_dict"""
     progsTime = {}
 
-    # Check if channel is in channel_indix dict, if not add channel as key
+    progsAfter = {}
+
+    # Check if channel is in progsTime dict, if not add channel as key
     for channel in program_dict.keys():
         if channel not in progsTime.keys():
             progsTime.update({channel: []})
+    
+    # Check if channel is in progsAfter dict, if not add channel as key
+    for channel in program_dict.keys():
+        if channel not in progsAfter.keys():
+            progsAfter.update({channel: []})
+
 
     for channel in program_dict.keys():
-        for program in program_dict[channel]:
-            for prog in program:
+        for index, program in enumerate(program_dict[channel]):
+            for index2, prog in enumerate(program):
                 # Append only the programs that start at the specified time
                 if prog.time.text == time:
                     progsTime[channel].append(prog)
+                    progsAfter[channel].append(program[index2+1])
 
 
     for channel in progsTime.keys():
         print(f'{channel.upper().replace("-", " ")}')
         if len(progsTime[channel]) != 0:
-            print(f'{time} > {progsTime[channel][0].strong.text}\n')
+            print(f'{time} - {progsAfter[channel][0].time.text} > {progsTime[channel][0].strong.text}\n')
         else:
             print(f'There is no programs that start at this time: {time}\n')
 
