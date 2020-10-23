@@ -158,12 +158,13 @@ def print_time_program(program_dict: dict, timeStart: str):
 
 
     for channel in progsTime.keys():
-        timeEnd = progsAfter[channel][0].time.text
-        progsTitle = progsTime[channel][0].strong.text
-        print(f'{channel.upper().replace("-", " ")}')
-        if len(progsTime[channel]) != 0:
+        if len(progsTime[channel]) > 0:
+            timeEnd = progsAfter[channel][0].time.text
+            progsTitle = progsTime[channel][0].strong.text
+            print(f'{channel.upper().replace("-", " ")}')
             print(f'{timeStart} - {timeEnd} > {progsTitle}\n')
         else:
+            print(f'{channel.upper().replace("-", " ")}')
             print(f'There is no programs that start at this time: {timeStart}\n')
 
 
