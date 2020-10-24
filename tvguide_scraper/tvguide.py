@@ -145,7 +145,6 @@ def print_time_program(program_dict: dict, timeStart: str):
         if channel not in progsAfter.keys():
             progsAfter.update({channel: []})
 
-
     for channel in program_dict.keys():
         for program in program_dict[channel]:
             for index, prog in enumerate(program):
@@ -153,7 +152,6 @@ def print_time_program(program_dict: dict, timeStart: str):
                 if prog.time.text == timeStart:
                     progsTime[channel].append(prog)
                     progsAfter[channel].append(program[index+1])
-
 
     for channel in progsTime.keys():
         if len(progsTime[channel]) > 0:
