@@ -1,4 +1,12 @@
-## How to use
+# What
+
+A program that gives the user a list over what comes in tv* today.
+
+*only danish tv for now
+
+<br/>
+
+# How to use
 
 Command using all flags:
 ```
@@ -6,13 +14,14 @@ python3 scraper.py -c [channel] -t [time] -a
 ```
 An example with 'real' values:
 ```
-python3 scraper.py -c dr1 -c tv2 -t 20:00
+python3 scraper.py -c dr1 -c tv2 -t 20:00 -a
 ```
-This prints only the tv-shows that start at 8 pm on the channels DR1 and TV2. 
+This prints only the tv-shows that start at 8 pm today on the channels DR1 and TV2 and there after prints all the shows on DR1 and TV2 for that day. 
 
 <br/>
 
 # Available flags
+
 - ```-c [channel]``` or ```--channel [channel]```
 - ```-t [hh:mm]``` or ```--time [hh:mm]```
 - ```-a``` or ```--all```
