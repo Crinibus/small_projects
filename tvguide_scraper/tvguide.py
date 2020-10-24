@@ -179,7 +179,6 @@ def main(args):
         print_all_programs(program_dict)
 
 
-
 if __name__ == "__main__":
     args = argparse_setup()
     try:
