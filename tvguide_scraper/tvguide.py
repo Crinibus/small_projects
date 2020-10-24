@@ -85,12 +85,10 @@ def get_programs(channel_list: list, channels: list) -> dict:
     
     program_dict = {}
 
-
     allChannelsChosen = False
 
     if channels[0] == 'all':
         allChannelsChosen = True
-
 
     if not allChannelsChosen:
         for channel in channels:
