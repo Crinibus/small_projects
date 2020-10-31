@@ -13,21 +13,21 @@ def argparse_setup():
         help='the channel with the user want to see programs from',
         action='append'
     )
-    
+
     parser.add_argument(
         '-t',
         '--time',
         help='the time the program starts. E.g. "20:00". Format is: "hh:mm"',
         type=str
     )
-    
+
     parser.add_argument(
         '-a',
         '--all',
         help='show all programs for the chosen channel(s)',
         action='store_true'
     )
-    
+
     return parser.parse_args()
 
 
@@ -82,7 +82,7 @@ def get_programs(channel_list: list, channels: list) -> dict:
         'eurosport-2': 31,
         'boomerang': 32,
     }
-    
+
     program_dict = {}
 
     allChannelsChosen = False
@@ -112,7 +112,7 @@ def get_programs(channel_list: list, channels: list) -> dict:
             index = channel_index[channel]
             # Add all program in channel to program_dict
             program_dict[channel].append(channel_list[index].find_all('a', class_='tv2epg-program-link'))
-    
+
     return program_dict
 
 
@@ -139,7 +139,7 @@ def print_time_program(program_dict: dict, timeStart: str):
     for channel in program_dict.keys():
         if channel not in progsTime.keys():
             progsTime.update({channel: []})
-    
+
     # Check if channel is in progsAfter dict, if not add channel as key
     for channel in program_dict.keys():
         if channel not in progsAfter.keys():
@@ -165,7 +165,7 @@ def print_time_program(program_dict: dict, timeStart: str):
 
 
 def main(args):
-    if args.channel == None:
+    if not args.channel:
         print('You haven\'t chosen one or more channels')
         return
 
@@ -182,4 +182,4 @@ if __name__ == "__main__":
     try:
         main(args)
     except KeyError:
-        print(f'Check channel name or this scraper can\'t use one of the chosen channels')
+        print('Check channel name or this scraper can\'t use one of the chosen channels')
