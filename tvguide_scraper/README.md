@@ -88,3 +88,4 @@ Right now all the channels on "tvtid.tv2.dk" is supported with is:
 - Able to chose which day the user want to see tv-shows from
 - If there is not a program that start at the specified time using the --time flag, then show the program before and after or the program that is running at that time
     - Maybe use the "data-start" and "data-stop" in the html, there the time is stored as UNIX time (Epoch time). Need a way to convert the specified time to UNIX time and vice versa
+    - Maybe convert the specified time to UNIX time and find the program that the specified time is between the program's "data-start" and "data-stop"
