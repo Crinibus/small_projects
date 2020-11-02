@@ -116,7 +116,7 @@ def get_programs(channel_list: list, channels: list) -> dict:
     return program_dict
 
 
-def print_all_programs(program_dict: list):
+def print_all_programs(program_dict: dict):
     """Print all the programs in the provided dict"""
     for channel in program_dict.keys():
         print(f'\n{channel.upper().replace("-", " ")}')
