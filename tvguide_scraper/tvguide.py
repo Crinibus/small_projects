@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import argparse
+from datetime import datetime
 
 
 def argparse_setup():
@@ -101,7 +102,7 @@ def get_programs(channel_list: list, channels: list) -> dict:
             # Get index from dict
             index = channel_index[channel]
             # Add all program in channel to program_dict
-            program_dict[channel].append(channel_list[index].find_all('a', class_='tv2epg-program-link'))
+            program_dict[channel].append(channel_list[index].find_all('li', class_='tv2epg-program-item'))
     else:
         for channel in channel_index.keys():
             # Check if channel is in channel_indix dict, if not add channel as key
@@ -111,7 +112,7 @@ def get_programs(channel_list: list, channels: list) -> dict:
             # Get index from dict
             index = channel_index[channel]
             # Add all program in channel to program_dict
-            program_dict[channel].append(channel_list[index].find_all('a', class_='tv2epg-program-link'))
+            program_dict[channel].append(channel_list[index].find_all('li', class_='tv2epg-program-item'))
 
     return program_dict
 
@@ -119,11 +120,12 @@ def get_programs(channel_list: list, channels: list) -> dict:
 def print_all_programs(program_dict: dict):
     """Print all the programs in the provided dict"""
     for channel in program_dict.keys():
+        # print channel name
         print(f'\n{channel.upper().replace("-", " ")}')
-        for program in program_dict[channel]:
-            for prog in program:
-                timeStart = prog.time.text
-                progsTitle = prog.strong.text
+        for program_list in program_dict[channel]:
+            for program in program_list:
+                timeStart = program.time.text
+                progsTitle = program.strong.text
                 print(f"{timeStart} > {progsTitle}")
 
 
@@ -132,31 +134,39 @@ def print_time_program(program_dict: dict, timeStart: str):
     # Contains the program(s) that start at the specified time
     progsTime = {}
 
-    # Contains the program after the program(s) that is stored in progsTime, to later get when the program(s) ends
-    progsAfter = {}
-
     # Check if channel is in progsTime dict, if not add channel as key
     for channel in program_dict.keys():
         if channel not in progsTime.keys():
             progsTime.update({channel: []})
 
-    # Check if channel is in progsAfter dict, if not add channel as key
     for channel in program_dict.keys():
-        if channel not in progsAfter.keys():
-            progsAfter.update({channel: []})
+        for program_list in program_dict[channel]:
+            for program in program_list:
+                # Get time start end end of program in UNIX time from HTML
+                time_data_unix_start = int(program.get('data-start'))
+                time_data_unix_end = int(program.get('data-stop'))
+                # Convert UNIX times to hour and minutes to an int, e.g.: 1604692800 -> 2000
+                # Times are shifted from UTC to UTC+1 (CET)
+                time_data_unix_start_convert = int(datetime.utcfromtimestamp(time_data_unix_start + 3600).strftime('%H%M'))
+                time_data_unix_end_convert = int(datetime.utcfromtimestamp(time_data_unix_end + 3600).strftime('%H%M'))
 
-    for channel in program_dict.keys():
-        for program in program_dict[channel]:
-            for index, prog in enumerate(program):
-                # Append only the programs that start at the specified time to progsTime
-                if prog.time.text == timeStart:
-                    progsTime[channel].append(prog)
-                    progsAfter[channel].append(program[index+1])
+                # Append the program that start at the specified time to dict progsTime
+                if program.time.text == timeStart:
+                    progsTime[channel].append(program)
+                # Append the program that is running at the specified time to dict progsTime
+                elif time_data_unix_start_convert < int(timeStart.replace(':', '')) and time_data_unix_end_convert > int(timeStart.replace(':', '')):
+                    progsTime[channel].append(program)
 
     for channel in progsTime.keys():
         if len(progsTime[channel]) > 0:
-            timeEnd = progsAfter[channel][0].time.text
-            progsTitle = progsTime[channel][0].strong.text
+            # timeEnd = progsAfter[channel][0].time.text
+            progsTitle = progsTime[channel][0].get('title')
+            timeStart_unix = int(progsTime[channel][0].get('data-start'))
+            timeEnd_unix = int(progsTime[channel][0].get('data-stop'))
+            # Times are shifted from UTC to UTC+1 (CET)
+            timeStart = datetime.utcfromtimestamp(timeStart_unix + 3600).strftime('%H:%M')
+            timeEnd = datetime.utcfromtimestamp(timeEnd_unix + 3600).strftime('%H:%M')
+            
             print(f'{channel.upper().replace("-", " ")}')
             print(f'{timeStart} - {timeEnd} > {progsTitle}\n')
         else:
