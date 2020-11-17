@@ -45,7 +45,7 @@ By using the flag "-a" or "--all" you want to see all the programs running today
 
 <br/>
 
-Right now all the channels on "tvtid.tv2.dk" is supported with is:
+Right now all the channels on "tvtid.tv2.dk" is supported:
 - dr1
 - tv2
 - tv3
