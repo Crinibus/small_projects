@@ -87,3 +87,5 @@ Right now all the channels on "tvtid.tv2.dk" is supported with is:
 - Add support for multiple "--time" flags
 - Able to chose which day the user want to see tv-shows from
 - Add a file with default values (such as channels) that the user can change by defining them with commands
+- Add an argument to search for a specific program, such as "TV-avisen" and then show all the programs (with time)
+- When searching for a specific program or time, then also show the category for the program
