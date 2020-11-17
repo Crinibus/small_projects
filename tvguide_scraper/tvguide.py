@@ -166,7 +166,7 @@ def print_time_program(program_dict: dict, timeStart: str):
             # Times are shifted from UTC to UTC+1 (CET)
             timeStart = datetime.utcfromtimestamp(timeStart_unix + 3600).strftime('%H:%M')
             timeEnd = datetime.utcfromtimestamp(timeEnd_unix + 3600).strftime('%H:%M')
-            
+
             print(f'{channel.upper().replace("-", " ")}')
             print(f'{timeStart} - {timeEnd} > {progsTitle}\n')
         else:
@@ -176,11 +176,13 @@ def print_time_program(program_dict: dict, timeStart: str):
 
 def main(args):
     if not args.channel:
-        print('You haven\'t chosen one or more channels')
-        return
+        print('No channels chosen: using default channels (dr1, tv2)')
+        args.channel = ['dr1', 'tv2']
+        # return
 
     channel_list = get_channels()
     program_dict = get_programs(channel_list, args.channel)
+
     if args.time:
         print_time_program(program_dict, args.time)
     if args.all:
