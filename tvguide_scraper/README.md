@@ -84,6 +84,7 @@ Right now all the channels on "tvtid.tv2.dk" is supported:
 
 ## TODO
 
+- USE THEIR API TO GET JSON INSTEAD OF USING BEAUTIFULSOUP
 - Add support for multiple "--time" flags
 - Able to chose which day the user want to see tv-shows from
 - Add a file with default values (such as channels) that the user can change by defining them with commands
