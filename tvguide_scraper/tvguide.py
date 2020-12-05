@@ -147,6 +147,8 @@ def print_time_program(program_dict: dict, timeStart: str):
                 time_data_unix_end = int(program.get('data-stop'))
                 # Convert UNIX times to hour and minutes to an int, e.g.: 1604692800 -> 2000
                 # Times are shifted from UTC to UTC+1 (CET)
+
+                # TODO: Use datetime timezone to convert to my timezone
                 time_data_unix_start_convert = int(datetime.utcfromtimestamp(time_data_unix_start + 3600).strftime('%H%M'))
                 time_data_unix_end_convert = int(datetime.utcfromtimestamp(time_data_unix_end + 3600).strftime('%H%M'))
 
