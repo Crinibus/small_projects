@@ -1,3 +1,9 @@
+
+# **Note**
+This program is moved to it's own repository [here](https://github.com/Crinibus/tvguide)
+
+<br/><br/><br/><br/>
+
 # What
 
 A program that gives the user a list over what comes in tv* today.
