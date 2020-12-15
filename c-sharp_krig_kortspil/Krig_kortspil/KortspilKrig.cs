@@ -84,67 +84,67 @@ namespace Krig_kortspil
         /// <param name="PlayerTwo">Player two</param>
         public void StartGame()
         {
-            while (playerOne.NumCards != 0 || playerTwo.NumCards != 0)
+            while (playerOne.NumCards > 0 && playerTwo.NumCards > 0 && roundNum <= maxRounds)
             {
-                // Increase round number
-                roundNum++;
+                Round();
+            }
 
-                Console.WriteLine($"Num Cards before round: {playerOne} has {playerOne.NumCards} and {playerTwo} has {playerTwo.NumCards}");
-
-
-                // Each player draws one card
-                Card cardOne = playerOne.NextCard();
-                Card cardTwo = playerTwo.NextCard();
-
-                Console.WriteLine($"Round {roundNum} : {cardOne.Rank} <> {cardTwo.Rank}");
-
-                // See who won this round
-                if (cardOne.Rank == cardTwo.Rank)
+            if (roundNum > MaxRounds)
+            {
+                if (playerOne.NumCards == playerTwo.NumCards)
                 {
-                    Krig(cardOne, cardTwo);
+                    Console.WriteLine("Both players died of age exactly at the same time");
                 }
-                else if (cardOne.Rank > cardTwo.Rank)
+                else
                 {
-                    playerOne.GetCards(cardOne, cardTwo);
-                    playerOne.RoundsWon++;
-                }
-                else if (cardOne.Rank < cardTwo.Rank)
-                {
-                    playerTwo.GetCards(cardOne, cardTwo);
-                    playerTwo.RoundsWon++;
-                }
-                
-                //Console.WriteLine($"Cards at end: {PlayerOne} has {PlayerOne.NumCards} and {PlayerTwo} has {PlayerTwo.NumCards}");
-
-                hasFoundWinner = CheckForWinner();
-
-                if (hasFoundWinner)
-                {
-                    return;
+                    Player dieWinner = playerOne.NumCards > playerTwo.NumCards ? playerOne : playerTwo;
+                    Player dieLoser = playerOne.NumCards < playerTwo.NumCards ? playerOne : playerTwo;
+                    Console.WriteLine($"\nBoth players died of age, but {dieWinner} lived a little bit longer than {dieLoser}");
                 }
 
-                if (roundNum == MaxRounds)
-                {
-                    if (playerOne.NumCards == playerTwo.NumCards)
-                    {
-                        Console.WriteLine("Both players died of age exactly at the same time");
-                    }
-                    else
-                    {
-                        Player dieWinner = playerOne.NumCards > playerTwo.NumCards ? playerOne : playerTwo;
-                        Player dieLoser = playerOne.NumCards < playerTwo.NumCards ? playerOne : playerTwo;
-                        Console.WriteLine($"\nBoth players died of age, but {dieWinner} lived a little bit longer than {dieLoser}");
-                    }
+                ShowStats();
 
-                    ShowStats();
+                Console.Beep(beepFrequency, beepDuration);
 
-                    Console.Beep(beepFrequency, beepDuration);
+                return;
+            }
+            else
+            {
+                CheckForWinner();
+            }
+        }
 
-                    return;
-                }
+        /// <summary>
+        /// Run a single round
+        /// </summary>
+        public void Round()
+        {
+            // Increase round number
+            roundNum++;
 
-                // Space between rounds in terminal
-                Console.WriteLine();
+            Console.WriteLine($"Num Cards before round: {playerOne} has {playerOne.NumCards} and {playerTwo} has {playerTwo.NumCards}");
+
+
+            // Each player draws one card
+            Card cardOne = playerOne.NextCard();
+            Card cardTwo = playerTwo.NextCard();
+
+            Console.WriteLine($"Round {roundNum} : {cardOne.Rank} <> {cardTwo.Rank}\n");
+
+            // See who won this round
+            if (cardOne.Rank == cardTwo.Rank)
+            {
+                Krig(cardOne, cardTwo);
+            }
+            else if (cardOne.Rank > cardTwo.Rank)
+            {
+                playerOne.GetCards(cardOne, cardTwo);
+                playerOne.RoundsWon++;
+            }
+            else if (cardOne.Rank < cardTwo.Rank)
+            {
+                playerTwo.GetCards(cardOne, cardTwo);
+                playerTwo.RoundsWon++;
             }
         }
 
@@ -272,6 +272,8 @@ namespace Krig_kortspil
                               $"            {playerTwo} won {playerTwo.RoundsWon} rounds");
             Console.WriteLine($"Krigs won: {playerOne} won {playerOne.KrigWon} krigs\n" +
                               $"           {playerTwo} won {playerTwo.KrigWon} krigs");
+            Console.WriteLine($"Num cards: {playerOne} has {playerOne.NumCards} cards\n" +
+                              $"           {playerTwo} has {playerTwo.NumCards} cards");
         }
     }
 }
