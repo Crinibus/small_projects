@@ -155,7 +155,7 @@ namespace Krig_kortspil
         /// <param name="cardTwo">Card from PlayerTwo</param>
         public void Krig(Card cardOne, Card cardTwo)
         {
-            Console.WriteLine($"Krig! {cardOne.Rank} <> {cardTwo.Rank}");
+            Console.WriteLine($"Krig! {cardOne.Rank} <> {cardTwo.Rank}\n");
 
             int numExtraCards = 3;
 
