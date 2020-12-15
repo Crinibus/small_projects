@@ -34,7 +34,7 @@ namespace Krig_kortspil
 
         public override string ToString()
         {
-            return $"{rank} of {suit}";
+            return $"{Rank} of {Suit}";
         }
     }
 }
