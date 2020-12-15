@@ -15,8 +15,6 @@ namespace Krig_kortspil
 
         int roundNum = 0;
 
-        bool hasFoundWinner;
-
         int beepFrequency = 500;
         int beepDuration = 500;
 
@@ -103,15 +101,13 @@ namespace Krig_kortspil
                 }
 
                 ShowStats();
-
-                Console.Beep(beepFrequency, beepDuration);
-
-                return;
             }
             else
             {
                 CheckForWinner();
             }
+            
+            Console.Beep(beepFrequency, beepDuration);
         }
 
         /// <summary>
@@ -157,7 +153,7 @@ namespace Krig_kortspil
         {
             Console.WriteLine($"Krig! {cardOne.Rank} <> {cardTwo.Rank}\n");
 
-            int numExtraCards = 3;
+            int numExtraCards;
 
             if (playerOne.NumCards >= 3 && playerTwo.NumCards >= 3)
             {
@@ -246,7 +242,7 @@ namespace Krig_kortspil
         /// Check for a winner
         /// </summary>
         /// <returns>Return true if there is a winner</returns>
-        bool CheckForWinner()
+        private void CheckForWinner()
         {
             // Check if a player has zero cards
             if (playerOne.NumCards == 0 || playerTwo.NumCards == 0)
@@ -258,10 +254,7 @@ namespace Krig_kortspil
                 ShowStats();
 
                 Console.Beep(beepFrequency, beepDuration);
-                return true;
             }
-
-            return false;
         }
 
         private void ShowStats()
