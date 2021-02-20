@@ -51,6 +51,19 @@ def show_all_data(data: dt.Data):
                 print(f"\t\t{product.name}")
 
 
+def get_user_choice(data: dt.Data):
+    user_super_category_name = questionary.select("Choose super category:", choices=[cat.name for cat in data.categories]).ask()
+    user_super_category = data.get_category(user_super_category_name)
+    # user_super_category = questionary.select("Choose super category:", choices=data.categories).ask()
+    user_sub_category_name = questionary.select("Choose sub category:", choices=[cat.name for cat in user_super_category.sub_categories]).ask()
+    user_sub_category = user_super_category.get_sub_category(user_sub_category_name)
+    user_sub_category.get_info_for_products()
+
+
+def show_user_choice(super_category: dt.SuperCategory, sub_category: dt.SubCategory):
+    pass
+
+
 def main():
     my_data = dt.Data("wishlist.json")
 
