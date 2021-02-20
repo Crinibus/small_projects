@@ -4,7 +4,7 @@ import data as dt
 
 
 def read_wishlist(filename: str) -> dict:
-    with open(filename, 'r') as json_file:
+    with open(filename, "r") as json_file:
         data = json.load(json_file)
     return data
 
@@ -34,10 +34,11 @@ def get_links(data: dict, super_category: str, sub_category: str) -> list:
 #     data = read_wishlist('wishlist.json')
 #     super_cat = questionary.select("Select a category:", choices=get_super_categories(data)).ask()
 #     sub_cat = questionary.select("Select a sub category:", choices=get_sub_categories(data, super_cat)).ask()
-    
+
 #     print()
 #     for index, link in enumerate(get_links(data, super_cat, sub_cat)):
 #         print(f"{index + 1} > {link}")
+
 
 def show_all_data(data: dt.Data):
     for superCategory in data.categories:
@@ -46,15 +47,15 @@ def show_all_data(data: dt.Data):
             print(f"\tSub category: {subCategory.name}")
             subCategory.get_info_for_products()
             for product in subCategory.products:
-                #product.get_info_link()
+                # product.get_info_link()
                 print(f"\t\t{product.name}")
 
 
 def main():
-    my_data = dt.Data('wishlist.json')
+    my_data = dt.Data("wishlist.json")
 
-    show_all_data(my_data)    
+    show_all_data(my_data)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
