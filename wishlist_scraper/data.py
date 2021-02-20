@@ -30,6 +30,11 @@ class Data:
         new_category = SuperCategory(name, info)
         self.categories.append(new_category)
 
+    def get_category(self, cat_name):
+        for cat in self.categories:
+            if cat.name == cat_name:
+                return cat
+
 
 class SuperCategory:
     def __init__(self, name: str, info: dict) -> None:
@@ -45,6 +50,11 @@ class SuperCategory:
     def add_sub_category(self, name: str, info: dict):
         new_sub_category = SubCategory(name, info)
         self.sub_categories.append(new_sub_category)
+    
+    def get_sub_category(self, sub_cat_name: str):
+        for sub_cat in self.sub_categories:
+            if sub_cat.name == sub_cat_name:
+                return sub_cat
 
 
 class SubCategory:
