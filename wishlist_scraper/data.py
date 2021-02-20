@@ -64,7 +64,12 @@ class SubCategory:
     
     def get_info_for_products(self):
         # Create threads
-        threads = [threading.Thread(target=product.get_info, name=f"thread_{product.domain}") for product in self.products]
+        threads = [
+            threading.Thread(
+                target=product.get_info, name=f"thread_{product.domain}_{index}"
+            )
+            for index, product in enumerate(self.products)
+        ]
 
         # Start all threads
         for thread in threads:
