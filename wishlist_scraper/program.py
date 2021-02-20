@@ -44,8 +44,10 @@ def show_all_data(data: dt.Data):
         print(f"\nSuper category: {superCategory.name}")
         for subCategory in superCategory.sub_categories:
             print(f"\tSub category: {subCategory.name}")
+            subCategory.get_info_for_products()
             for product in subCategory.products:
-                print(f"\t\t{product.link}")
+                #product.get_info_link()
+                print(f"\t\t{product.name}")
 
 
 def main():

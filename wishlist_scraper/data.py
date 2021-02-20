@@ -1,5 +1,6 @@
 import json
-import requests
+import threading
+from websites import get_domain_from_link, GET_WEBSITE_METHOD
 
 
 class Data:
@@ -45,6 +46,7 @@ class SuperCategory:
         new_sub_category = SubCategory(name, info)
         self.sub_categories.append(new_sub_category)
 
+
 class SubCategory:
     def __init__(self, name: str, info: dict) -> None:
         self.name = name
@@ -60,14 +62,35 @@ class SubCategory:
         new_product = Product(link)
         self.products.append(new_product)
     
-    def __str__(self) -> str:
+    def get_info_for_products(self):
+        # Create threads
+        threads = [threading.Thread(target=product.get_info, name=f"thread_{product.domain}") for product in self.products]
+
+        # Start all threads
+        for thread in threads:
+            thread.start()
+
+        # Wait for all threads to finish
+        for thread in threads:
+            thread.join()
+
+    def __repr__(self) -> str:
         return f"SubCategory(category_name={self.name}, category_info={self.info}"
+
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 
 class Product:
     def __init__(self, link: str) -> None:
         self.link = link
+        self.domain = get_domain_from_link(link)
+        self.name = None
+        self.price = None
+        #self.get_info()
 
-    def get_info_link(self):
-        pass
+    def get_info(self):
+        self.name, self.price = GET_WEBSITE_METHOD[self.domain](self.link)
 
+    def __str__(self) -> str:
+        return f"{self.name} - {self.price}"
