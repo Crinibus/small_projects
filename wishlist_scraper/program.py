@@ -58,6 +58,8 @@ def get_user_choice(data: dt.Data):
     user_sub_category_name = questionary.select("Choose sub category:", choices=[cat.name for cat in user_super_category.sub_categories]).ask()
     user_sub_category = user_super_category.get_sub_category(user_sub_category_name)
     user_sub_category.get_info_for_products()
+    
+    show_user_choice(user_super_category, user_sub_category)
 
 
 def show_user_choice(super_category: dt.SuperCategory, sub_category: dt.SubCategory):
