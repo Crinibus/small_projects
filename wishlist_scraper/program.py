@@ -63,7 +63,10 @@ def get_user_choice(data: dt.Data):
 
 
 def show_user_choice(super_category: dt.SuperCategory, sub_category: dt.SubCategory):
-    pass
+    print(super_category.name)
+    print(f"\t{sub_category.name}")
+    for product in sub_category.products:
+        print(f"{product.price} - {product.name}")
 
 
 def main():
