@@ -48,7 +48,7 @@ def show_all_data(data: dt.Data):
             subCategory.get_info_for_products()
             for product in subCategory.products:
                 # product.get_info_link()
-                print(f"\t\t{product.name}")
+                print(f"\t\t{product.price} - {product.name}")
 
 
 def get_user_choice(data: dt.Data):
@@ -70,6 +70,7 @@ def main():
     my_data = dt.Data("wishlist.json")
 
     show_all_data(my_data)
+    # get_user_choice(my_data)
 
 
 if __name__ == "__main__":
