@@ -9,7 +9,7 @@ class Websites:
         # get name and price of product at link
         response = request_link(link)
         soup = BeautifulSoup(response.text, "html.parser")
-        name = soup.find("div", class_="product-main-info__info").h1.span.text.lower()
+        name = soup.find("div", class_="product-main-info__info").h1.span.text
         price = (
             soup.find("span", class_="product-price-now")
             .text.strip(",-")
@@ -22,7 +22,7 @@ class Websites:
         # get name and price of product at link
         response = request_link(link)
         soup = BeautifulSoup(response.text, "html.parser")
-        name = soup.find("div", class_="col-xs-12 col-sm-7").h1.text.lower()
+        name = soup.find("div", class_="col-xs-12 col-sm-7").h1.text
 
         try:
             # find normal price
@@ -55,7 +55,7 @@ class Websites:
         # get name and price of product at link
         response = request_link(link)
         soup = BeautifulSoup(response.text, "html.parser")
-        name = soup.find("div", class_="content-head").text.strip().lower()
+        name = soup.find("div", class_="content-head").text.strip()
         price = soup.find("div", class_="price").text.replace(u"\xa0DKK", "")
         return name, price
 
