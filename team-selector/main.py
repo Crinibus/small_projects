@@ -90,7 +90,7 @@ def main():
 
     names: list[str] = args.names
     team_count: int = args.team_count
-    dont_constraints: list[tuple[str, str]] = args.dont_constraints
+    dont_constraints: list[list[str, str]] = args.dont_constraints
 
     member_count: int = len(names)
 
