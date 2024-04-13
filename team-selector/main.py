@@ -27,7 +27,7 @@ def get_team_sizes(member_count: int, team_count: int) -> tuple[int]:
     base_member_count = member_count // team_count
 
     teams_with_base_member_count = [base_member_count for _ in range(team_count - remainder)]
-    teams_with_extra_member_count = [] if remainder == 0 else [base_member_count + 1 for _ in range(remainder)]
+    teams_with_extra_member_count = [base_member_count + 1 for _ in range(remainder)]
 
     return tuple(teams_with_base_member_count + teams_with_extra_member_count)
 
