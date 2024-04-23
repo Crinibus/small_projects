@@ -2,6 +2,11 @@ import argparse
 import random
 
 
+class NoValidTeam(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Team selector")
     parser.add_argument("--names", "-n", type=str, nargs="+", dest="names", help="Names to put into teams")
@@ -16,7 +21,26 @@ def parse_arguments():
         default=[],
         help="Two names that cannot be in the same team",
     )
+    parser.add_argument("--test", action="store_true", dest="test")
     return parser.parse_args()
+
+
+def process_dont_constraints(dont_constraints: list[list[str, str]]) -> dict[str, list[str]]:
+    processed_constraints: dict[str, list[str]] = dict()
+    for dont_constraint in dont_constraints:
+        firstName, secondName = dont_constraint
+
+        if firstName not in processed_constraints.keys():
+            processed_constraints[firstName] = []
+        if secondName not in processed_constraints.keys():
+            processed_constraints[secondName] = []
+
+        if firstName not in processed_constraints[secondName]:
+            processed_constraints[secondName].append(firstName)
+        if secondName not in processed_constraints[firstName]:
+            processed_constraints[firstName].append(secondName)
+
+    return processed_constraints
 
 
 def get_team_sizes(member_count: int, team_count: int) -> tuple[int]:
@@ -32,10 +56,39 @@ def get_team_sizes(member_count: int, team_count: int) -> tuple[int]:
     return tuple(teams_with_base_member_count + teams_with_extra_member_count)
 
 
-def put_names_into_teams(names: list[str], team_sizes: tuple[int], dont_constraints: list[list[str]]) -> tuple[str]:
+def find_valid_team_indexes(
+    name: str, teams: list[list[str]], spaces_left_in_teams: list[int], name_constraints: list[str]
+) -> list[int]:
+    valid_team_indexes: list[int] = []
+
+    for index, team in enumerate(teams):
+        if spaces_left_in_teams[index] == 0:
+            continue
+
+        is_valid_team = all(name not in name_constraints for name in team)
+
+        if is_valid_team:
+            valid_team_indexes.append(index)
+
+    if len(valid_team_indexes) == 0:
+        raise NoValidTeam(f"No valid team for name in dont constaints - {name=}")
+
+    return valid_team_indexes
+
+
+def put_names_into_teams(
+    names: list[str], team_sizes: tuple[int], processed_dont_constraints: dict[str, list[str]]
+) -> tuple[str]:
     spaces_left_in_teams = list(team_sizes)
 
     teams = [[] for _ in range(len(team_sizes))]
+
+    for constraint_name, name_constraints in processed_dont_constraints.items():
+        valid_team_indexes = find_valid_team_indexes(constraint_name, teams, spaces_left_in_teams, name_constraints)
+        random_team_index = random.choice(valid_team_indexes)
+        teams[random_team_index].append(constraint_name)
+        spaces_left_in_teams[random_team_index] -= 1
+        names.remove(constraint_name)
 
     for name in names:
         indexes_of_teams_with_spaces_left = [
@@ -45,20 +98,8 @@ def put_names_into_teams(names: list[str], team_sizes: tuple[int], dont_constrai
         team_index = random.choice(indexes_of_teams_with_spaces_left)
         team = teams[team_index]
 
-        tries = 0
-        while valid_insert_name_in_team(name, team, dont_constraints) is False and tries < 5:
-            team_index = random.choice(indexes_of_teams_with_spaces_left)
-            team = teams[team_index]
-            tries += 1
-
-        # print(valid_insert_name_in_team(name, team, dont_constraints), "---", tries)
-
         team.append(name)
         spaces_left_in_teams[team_index] -= 1
-
-    # Recursive if any of the teams are invalid
-    if any([is_team_valid(team, dont_constraints) is False for team in teams]):
-        return put_names_into_teams(names, team_sizes, dont_constraints)
 
     return teams
 
@@ -88,14 +129,25 @@ def is_team_valid(team: list[str], dont_constraints: list[list[str]]) -> bool:
 def main():
     args = parse_arguments()
 
+    if args.test:
+        # test(40)
+        test_v2()
+        return
+
+    if not args.names:
+        print("Please enter some names and team count and optionally constraints")
+        return
+
     names: list[str] = args.names
     team_count: int = args.team_count
     dont_constraints: list[list[str, str]] = args.dont_constraints
 
     member_count: int = len(names)
 
+    processed_dont_constraints = process_dont_constraints(dont_constraints)
+
     team_sizes = get_team_sizes(member_count, team_count)
-    teams = put_names_into_teams(names, team_sizes, dont_constraints)
+    teams = put_names_into_teams(names, team_sizes, processed_dont_constraints)
 
     is_valid_teams = all([is_team_valid(team, dont_constraints) for team in teams])
 
@@ -110,12 +162,6 @@ def test(max_member_count: int) -> None:
         for team_count in range(2, member_count + 1):
             team_sizes = get_team_sizes(member_count, team_count)
 
-            # names = ["a" for _ in range(member_count)]
-            # teams = put_names_into_teams(names, team_sizes)
-
-            # actual_team_count = len(team_sizes)
-            # actual_member_count = sum(team_sizes)
-
             print(member_count, team_count, team_sizes)
             # print(" -", actual_member_count, actual_team_count)
             assert len(team_sizes) == team_count, f"NOT MATCH TEAM - Expected {team_count}, got {len(team_sizes)}"
@@ -125,22 +171,26 @@ def test(max_member_count: int) -> None:
 
 
 def test_v2() -> None:
-    names: list[str] = ["niko", "luka", "mads", "isab"]
-    team_count: int = 2
-    dont_constraints = [["luka", "isab"]]
-
     for try_index in range(1000):
+        names: list[str] = ["one", "two", "three", "four", "five"]
+        team_count: int = 2
+        dont_constraints = [["one", "two"], ["one", "three"]]
+        processed_dont_constraints = process_dont_constraints(dont_constraints)
+
         member_count: int = len(names)
 
         team_sizes = get_team_sizes(member_count, team_count)
-        teams = put_names_into_teams(names, team_sizes, dont_constraints)
+        try:
+            teams = put_names_into_teams(names, team_sizes, processed_dont_constraints)
+        except NoValidTeam as ex:
+            print(f"Failed at try {try_index} - {ex}")
+            return
+
         print(teams)
 
         for team in teams:
-            assert is_team_valid(team, dont_constraints), f"Failed at try {try_index}"
+            assert is_team_valid(team, dont_constraints), f"Failed at try {try_index} - Team is not valid: {team}"
 
 
 if __name__ == "__main__":
     main()
-    # test(40)
-    # test_v2()
