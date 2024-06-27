@@ -192,5 +192,43 @@ def test_v2() -> None:
             assert is_team_valid(team, dont_constraints), f"Failed at try {try_index} - Team is not valid: {team}"
 
 
+def test_constraints():
+    names: list[str] = ["one", "two", "three", "four", "five"]
+    team_count: int = 3
+    team_sizes = get_team_sizes(len(names), team_count)
+    dont_constraints = [["one", "two"], ["one", "three"], ["one", "four"]]
+
+    print("Names:", names)
+    print("Team sizes:", team_sizes)
+    print("dont_constraints:", dont_constraints)
+    print("Team count:", team_count)
+    print()
+
+    is_possible = is_constraints_possible(names, team_count, dont_constraints)
+    print("Is constraints possible:", is_possible)
+
+
+def is_constraints_possible(names, num_teams, constraints):
+    name_constraint_count = {name: 0 for name in names}
+
+    # Count the number of constraints involving each name
+    for constraint in constraints:
+        for name in constraint:
+            name_constraint_count[name] += 1
+
+    # Check if any name has a constraint with every other name
+    for name, count in name_constraint_count.items():
+        if count == len(names) - 1:
+            if num_teams < len(names):
+                return False
+
+    # Check if the number of teams is less than the total number of unique names
+    if num_teams < len(set(name for constraint in constraints for name in constraint)):
+        return False
+
+    return True
+
+
 if __name__ == "__main__":
     main()
+    # test_constraints()
