@@ -79,6 +79,7 @@ def find_valid_team_indexes(
 def put_names_into_teams(
     names: list[str], team_sizes: tuple[int], processed_dont_constraints: dict[str, list[str]]
 ) -> tuple[str]:
+    names = names.copy()
     spaces_left_in_teams = list(team_sizes)
 
     teams = [[] for _ in range(len(team_sizes))]
@@ -129,18 +130,18 @@ def is_team_valid(team: list[str], dont_constraints: list[list[str]]) -> bool:
 def main():
     args = parse_arguments()
 
+    names: list[str] = args.names
+    team_count: int = args.team_count
+    dont_constraints: list[list[str, str]] = args.dont_constraints
+
     if args.test:
         # test(40)
-        test_v2()
+        test_v2(names, team_count, dont_constraints)
         return
 
     if not args.names:
         print("Please enter some names and team count and optionally constraints")
         return
-
-    names: list[str] = args.names
-    team_count: int = args.team_count
-    dont_constraints: list[list[str, str]] = args.dont_constraints
 
     member_count: int = len(names)
 
@@ -170,11 +171,16 @@ def test(max_member_count: int) -> None:
     print("PASS")
 
 
-def test_v2() -> None:
+def test_v2(
+    names: list[str] | None = None, team_count: int | None = None, dont_constraints: list[list[str, str]] | None = None
+) -> None:
+    names = names if names else ["one", "two", "three", "four", "five"]
+    team_count = team_count if team_count else 2
+    dont_constraints = dont_constraints if dont_constraints else [["one", "two"], ["one", "three"]]
+
+    valid_constraints = validate_constraints(names, dont_constraints)
+
     for try_index in range(1000):
-        names: list[str] = ["one", "two", "three", "four", "five"]
-        team_count: int = 2
-        dont_constraints = [["one", "two"], ["one", "three"]]
         processed_dont_constraints = process_dont_constraints(dont_constraints)
 
         member_count: int = len(names)
