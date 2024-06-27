@@ -145,6 +145,10 @@ def main():
 
     member_count: int = len(names)
 
+    if not validate_constraints(names, dont_constraints):
+        print("NOT VALID CONSTRAINTS - SOME CONSTRAINT NAMES ARE NOT IN NAMES LIST")
+        return
+
     processed_dont_constraints = process_dont_constraints(dont_constraints)
 
     team_sizes = get_team_sizes(member_count, team_count)
@@ -180,6 +184,10 @@ def test_v2(
 
     valid_constraints = validate_constraints(names, dont_constraints)
 
+    if not valid_constraints:
+        print("NOT VALID CONSTRAINTS")
+        return
+
     for try_index in range(1000):
         processed_dont_constraints = process_dont_constraints(dont_constraints)
 
@@ -196,6 +204,13 @@ def test_v2(
 
         for team in teams:
             assert is_team_valid(team, dont_constraints), f"Failed at try {try_index} - Team is not valid: {team}"
+
+
+def validate_constraints(names: list[str], dont_constraints: list[list[str]]) -> bool:
+    # flatten dont constraints list
+    names_in_dont_constraints = set([name for constraint in dont_constraints for name in constraint])
+
+    return all(constraint_name in names for constraint_name in names_in_dont_constraints)
 
 
 def test_constraints():
